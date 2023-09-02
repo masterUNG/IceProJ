@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "610076761604",
+    "project_id": "iceproj",
+    "storage_bucket": "iceproj.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:610076761604:android:c51e174aa5a7f820309f51",
+        "android_client_info": {
+          "package_name": "com.masterung.iceproj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "610076761604-aluk3kij6nb14dg3fudhe0i53bkro24t.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA_a0_6EcIxdii4nelZzjJAVoNvQMlW30I"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "610076761604-aluk3kij6nb14dg3fudhe0i53bkro24t.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
