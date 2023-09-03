@@ -87,7 +87,7 @@ class AppService {
 
     await googleSignIn.signIn().then((value) {
       Get.snackbar('Sign In Success', 'Welcome to My App');
-      Get.offAll(Chat());
+      Get.offAll(const Chat());
     }).catchError((onError) {
       Get.snackbar(onError.code, onError.message);
     });

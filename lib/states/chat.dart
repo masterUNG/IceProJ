@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'package:chat_bubbles/bubbles/bubble_special_three.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -38,7 +40,7 @@ class _ChatState extends State<Chat> {
               onTap: () {
                 FocusManager.instance.primaryFocus?.unfocus();
               },
-              child: Container(
+              child: SizedBox(
                 width: boxConstraints.maxWidth,
                 height: boxConstraints.maxHeight - 150,
                 // color: Colors.grey,
