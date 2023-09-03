@@ -10,6 +10,7 @@ import 'package:iceproj/utility/app_service.dart';
 import 'package:iceproj/widgets/widget_form.dart';
 import 'package:iceproj/widgets/widget_icon_button.dart';
 import 'package:iceproj/widgets/widget_image_avatar.dart';
+import 'package:iceproj/widgets/widget_menu.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -35,6 +36,16 @@ class _ChatState extends State<Chat> {
         print('userModels ---> ${appController.userModles.length}');
         return Scaffold(
           appBar: mainAppBar(),
+          endDrawer: Drawer(
+            child:
+                Column(
+                  children: [
+                    UserAccountsDrawerHeader(accountName: null, accountEmail: null),
+                    WidgetMenu(titleWidget: Text('Edit Profilt')),
+                    WidgetMenu(titleWidget: Text('Sign Out')),
+                  ],
+                ),
+          ),
           body: SafeArea(
             child: GestureDetector(
               onTap: () {
@@ -55,9 +66,12 @@ class _ChatState extends State<Chat> {
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                           children: [
-                            appController.chatModels[index].mapSender['uid'] == appController.userModles.last.uid ? const SizedBox() : WidgetImageAvatar(
-                                urlImage: appController
-                                    .chatModels[index].mapSender['avatar']),
+                            appController.chatModels[index].mapSender['uid'] ==
+                                    appController.userModles.last.uid
+                                ? const SizedBox()
+                                : WidgetImageAvatar(
+                                    urlImage: appController
+                                        .chatModels[index].mapSender['avatar']),
                             BubbleSpecialThree(
                               text: appController.chatModels[index].message,
                               color: Colors.purple,
