@@ -7,11 +7,13 @@ class WidgetMenu extends StatelessWidget {
     this.leadWidget,
     required this.titleWidget,
     this.subTitleWidget,
+    this.tapFunc,
   }) : super(key: key);
 
   final Widget? leadWidget;
   final Widget titleWidget;
   final Widget? subTitleWidget;
+  final Function()? tapFunc;
 
   @override
   Widget build(BuildContext context) {
@@ -19,6 +21,7 @@ class WidgetMenu extends StatelessWidget {
       title: titleWidget,
       leading: leadWidget,
       subtitle: subTitleWidget,
+      onTap: tapFunc,
     );
   }
 }

@@ -51,6 +51,7 @@ class AppService {
       Get.snackbar('Sign In Success', 'Welcome to My App');
       Get.offAll(const Chat());
     }).catchError((onError) {
+      print('onError ---> ${onError.code}');
       Get.snackbar(onError.code, onError.message);
     });
   }
@@ -94,9 +95,11 @@ class AppService {
   }
 
   Future<void> readChat() async {
-    FirebaseFirestore.instance.collection('chat').orderBy('timestamp', descending: false)
-    .snapshots()
-    .listen((event) {
+    FirebaseFirestore.instance
+        .collection('chat')
+        .orderBy('timestamp', descending: false)
+        .snapshots()
+        .listen((event) {
       if (appController.chatModels.isNotEmpty) {
         appController.chatModels.clear();
       }
@@ -107,6 +110,12 @@ class AppService {
           appController.chatModels.add(chatModel);
         }
       }
+    });
+  }
+
+  Future<void> processSignOut() async {
+    FirebaseAuth.instance.signOut().then((value) {
+      Get.offAllNamed('/authen');
     });
   }
 }

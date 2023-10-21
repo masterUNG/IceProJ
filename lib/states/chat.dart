@@ -6,11 +6,14 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iceproj/model/chat_model.dart';
 import 'package:iceproj/utility/app_controller.dart';
+import 'package:iceproj/utility/app_dialog.dart';
 import 'package:iceproj/utility/app_service.dart';
 import 'package:iceproj/widgets/widget_form.dart';
 import 'package:iceproj/widgets/widget_icon_button.dart';
 import 'package:iceproj/widgets/widget_image_avatar.dart';
+import 'package:iceproj/widgets/widget_image_network.dart';
 import 'package:iceproj/widgets/widget_menu.dart';
+import 'package:iceproj/widgets/widget_text_button.dart';
 
 class Chat extends StatefulWidget {
   const Chat({super.key});
@@ -20,7 +23,7 @@ class Chat extends StatefulWidget {
 }
 
 class _ChatState extends State<Chat> {
-  AppController appController = Get.find();
+  AppController appController = Get.put(AppController());
   TextEditingController textEditingController = TextEditingController();
 
   @override
@@ -33,18 +36,48 @@ class _ChatState extends State<Chat> {
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, BoxConstraints boxConstraints) {
       return Obx(() {
-        print('userModels ---> ${appController.userModles.length}');
+        print('##21oct userModels ---> ${appController.userModles.length}');
         return Scaffold(
           appBar: mainAppBar(),
           endDrawer: Drawer(
-            child:
-                Column(
-                  children: [
-                    UserAccountsDrawerHeader(accountName: null, accountEmail: null),
-                    WidgetMenu(titleWidget: Text('Edit Profilt')),
-                    WidgetMenu(titleWidget: Text('Sign Out')),
-                  ],
+            child: Column(
+              children: [
+                UserAccountsDrawerHeader(accountName: null, accountEmail: null),
+                WidgetMenu(
+                  titleWidget: const Text('Edit Profilt'),
+                  tapFunc: () {
+                    Get.back();
+                  },
                 ),
+                const Spacer(),
+                WidgetMenu(
+                  titleWidget: const Text('Sign Out'),
+                  tapFunc: () {
+                    Get.back();
+                    AppDialog().normalDialog(
+                        title: 'Sign Out ?',
+                        iconWidget: const SizedBox(
+                          width: 120,
+                          height: 120,
+                          child: WidgetImageNetwork(),
+                        ),
+                        contentWidget: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text('Please Confirm SignOut'),
+                          ],
+                        ),
+                        actionWidget: WidgetTextButton(
+                          data: 'Confirm',
+                          pressFunc: () {
+                            Get.back();
+                            AppService().processSignOut();
+                          },
+                        ));
+                  },
+                ),
+              ],
+            ),
           ),
           body: SafeArea(
             child: GestureDetector(
