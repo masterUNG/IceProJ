@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:iceproj/model/chat_model.dart';
 import 'package:iceproj/model/user_model.dart';
 import 'package:iceproj/states/edit_profile.dart';
+import 'package:iceproj/states/list_friend.dart';
 import 'package:iceproj/utility/app_controller.dart';
 import 'package:iceproj/utility/app_dialog.dart';
 import 'package:iceproj/utility/app_service.dart';
@@ -66,6 +67,12 @@ class _ChatState extends State<Chat> {
                       print(
                           '##21oct ขนาดของ userMOdels ---> ${appController.userModles.length}');
                     });
+                  },
+                ),
+                WidgetMenu(
+                  titleWidget: Text('List Friend'),
+                  tapFunc: () {
+                    Get.to(const ListFriend());
                   },
                 ),
                 const Spacer(),

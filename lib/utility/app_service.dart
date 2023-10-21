@@ -8,6 +8,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:iceproj/model/chat_model.dart';
+import 'package:iceproj/model/private_chat_model.dart';
 import 'package:iceproj/model/user_model.dart';
 import 'package:iceproj/states/chat.dart';
 import 'package:iceproj/utility/app_constant.dart';
@@ -168,6 +169,47 @@ class AppService {
         .update(map)
         .then((value) {
       findUserModelFromUid(uid: docIdUser);
+    });
+  }
+
+  Future<void> readAllFriend() async {
+    FirebaseFirestore.instance.collection('user').get().then((value) {
+      if (appController.friendUserModles.isNotEmpty) {
+        appController.friendUserModles.clear();
+      }
+
+      for (var element in value.docs) {
+        UserModel userModel = UserModel.fromMap(element.data());
+        if (userModel.uid != appController.userModles.last.uid) {
+          appController.friendUserModles.add(userModel);
+        }
+      }
+    });
+  }
+
+  Future<void> findDocIdPrivateChat(
+      {required UserModel friendUserModel}) async {
+    FirebaseFirestore.instance.collection('privateChat').get().then((value) {
+      if (appController.docIdPrivteChats.isNotEmpty) {
+        appController.docIdPrivteChats.clear();
+      }
+
+      for (var element in value.docs) {
+        PrivateChatModel privateChatModel =
+            PrivateChatModel.fromMap(element.data());
+
+        if (privateChatModel.friendKeys
+            .contains(appController.userModles.last.uid)) {
+         
+
+          if (privateChatModel.friendKeys.contains(friendUserModel.uid)) {
+             print('ค่่าของ docId ---> ${element.id}');
+            appController.docIdPrivteChats.add(element.id);
+          }
+
+          
+        }
+      } // for
     });
   }
 }
