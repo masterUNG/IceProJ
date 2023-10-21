@@ -6,13 +6,23 @@ class WidgetIconButton extends StatelessWidget {
     Key? key,
     required this.iconData,
     required this.pressFunc,
+    this.color,
+    this.size,
   }) : super(key: key);
 
   final IconData iconData;
   final Function() pressFunc;
+  final Color? color;
+  final double? size;
 
   @override
   Widget build(BuildContext context) {
-    return IconButton(onPressed: pressFunc, icon: Icon(iconData));
+    return IconButton(
+        onPressed: pressFunc,
+        icon: Icon(
+          iconData,
+          size: size,
+          color: color,
+        ));
   }
 }

@@ -19,6 +19,7 @@ class WidgetImageNetwork extends StatelessWidget {
       urlImage ?? AppContant.urlLogo,
       width: size,
       height: size,
+      fit: BoxFit.cover,
     );
   }
 }

@@ -5,6 +5,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iceproj/model/chat_model.dart';
+import 'package:iceproj/model/user_model.dart';
+import 'package:iceproj/states/edit_profile.dart';
 import 'package:iceproj/utility/app_controller.dart';
 import 'package:iceproj/utility/app_dialog.dart';
 import 'package:iceproj/utility/app_service.dart';
@@ -29,6 +31,7 @@ class _ChatState extends State<Chat> {
   @override
   void initState() {
     super.initState();
+
     AppService().readChat();
   }
 
@@ -42,11 +45,27 @@ class _ChatState extends State<Chat> {
           endDrawer: Drawer(
             child: Column(
               children: [
-                UserAccountsDrawerHeader(accountName: null, accountEmail: null),
+                appController.userModles.isEmpty
+                    ? const SizedBox()
+                    : UserAccountsDrawerHeader(
+                        accountName: Text(appController.userModles.last.name),
+                        accountEmail: null,
+                        currentAccountPicture: WidgetImageNetwork(
+                          urlImage: appController.userModles.last.avatar,
+                        ),
+                      ),
                 WidgetMenu(
                   titleWidget: const Text('Edit Profilt'),
                   tapFunc: () {
                     Get.back();
+                    Get.to(const EditProfile())?.then((value) async {
+                      UserModel? userModel = await AppService()
+                          .findUserModelFromUid(
+                              uid: appController.userModles.last.uid);
+                      appController.userModles.add(userModel!);
+                      print(
+                          '##21oct ขนาดของ userMOdels ---> ${appController.userModles.length}');
+                    });
                   },
                 ),
                 const Spacer(),
@@ -165,17 +184,19 @@ class _ChatState extends State<Chat> {
 
   AppBar mainAppBar() {
     return AppBar(
-      leading: appController.userModles.isEmpty
-          ? const SizedBox()
-          : Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                WidgetImageAvatar(
-                  urlImage: appController.userModles.last.avatar,
-                  radius: 20,
-                ),
-              ],
-            ),
+      leading: Obx(() {
+        return appController.userModles.isEmpty
+            ? const SizedBox()
+            : Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  WidgetImageAvatar(
+                    urlImage: appController.userModles.last.avatar,
+                    radius: 20,
+                  ),
+                ],
+              );
+      }),
       title: appController.userModles.isEmpty
           ? const SizedBox()
           : Text(appController.userModles.last.name),
