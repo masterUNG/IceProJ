@@ -114,7 +114,7 @@ class _ChatState extends State<Chat> {
                 width: boxConstraints.maxWidth,
                 height: boxConstraints.maxHeight - 150,
                 // color: Colors.grey,
-                child: appController.chatModels.isEmpty
+                child: ((appController.chatModels.isEmpty) || (appController.userModles.isEmpty))
                     ? const SizedBox()
                     : ListView.builder(
                         itemCount: appController.chatModels.length,
